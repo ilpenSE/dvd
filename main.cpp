@@ -7,6 +7,7 @@ using std::println;
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 600;
 constexpr int FPS = 180;
+constexpr int RESIZABLE = true;
 
 struct Box {
   Rectangle rect;
@@ -88,6 +89,7 @@ void DvdExample(Ball& ball, double dt, int swidth = GetScreenWidth(), int sheigh
 }
 
 int main(void) {
+  if (RESIZABLE) SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
   InitWindow(WIDTH, HEIGHT, "DVD Logo Animation");
   SetTargetFPS(FPS);
 
@@ -101,9 +103,15 @@ int main(void) {
     BeginDrawing();
       ClearBackground(GetColor(0x181818FF));
 
-      DvdExample(rectangle, dt);
-      DvdExample(square, dt);
-      DvdExample(circle, dt);
+      if (RESIZABLE) {
+        DvdExample(rectangle, dt);
+        DvdExample(square, dt);
+        DvdExample(circle, dt);
+      } else {
+        DvdExample(rectangle, dt, WIDTH, HEIGHT);
+        DvdExample(square, dt, WIDTH, HEIGHT);
+        DvdExample(circle, dt, WIDTH, HEIGHT);
+      }
 
       #if 0
       DrawCoordinateSystem(3.0f, WHITE);
