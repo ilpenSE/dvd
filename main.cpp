@@ -1,5 +1,12 @@
-#include <stdio.h>
 #include <raylib.h>
+#include "raylib-extra.hpp"
+#include <print>
+using std::println;
+
+// You can change them:
+constexpr int WIDTH = 800;
+constexpr int HEIGHT = 600;
+constexpr int FPS = 180;
 
 struct Box {
   Rectangle rect;
@@ -26,8 +33,7 @@ void DrawCoordinateSystem(float thickness, Color color, float swidth = GetScreen
 
 void DvdExample(Box& box, double dt, int swidth = GetScreenWidth(), int sheight = GetScreenHeight()) {
   // Update rectangle
-  box.rect.x += box.speed.x * dt;
-  box.rect.y += box.speed.y * dt;
+  box.rect += box.speed * dt;
 
   // Calculate if x element out-of-bounds
   // If that, inverse x speed then clamp the position
@@ -56,8 +62,7 @@ void DvdExample(Ball& ball, double dt, int swidth = GetScreenWidth(), int sheigh
   const float rad = ball.radius;
 
   // Update circle
-  ball.center.x += ball.speed.x * dt;
-  ball.center.y += ball.speed.y * dt;
+  ball.center += ball.speed * dt;
 
   // Calculate if x element out-of-bounds
   // If that, inverse x speed then clamp the position
@@ -83,8 +88,8 @@ void DvdExample(Ball& ball, double dt, int swidth = GetScreenWidth(), int sheigh
 }
 
 int main(void) {
-  InitWindow(800, 600, "DVDez nuttzz");
-  SetTargetFPS(180);
+  InitWindow(WIDTH, HEIGHT, "DVD Logo Animation");
+  SetTargetFPS(FPS);
 
   Box rectangle = {.rect={.x=100, .y=200, .width=200, .height=100}, .speed={300,300}, .color=RED};
   Box square = {.rect={.x=400, .y=400, .width=50, .height=50}, .speed={300, 300}, .color=BLUE};
@@ -101,7 +106,7 @@ int main(void) {
       DvdExample(circle, dt);
 
       #if 0
-      DrawCoordinateSystem(5.0f, WHITE);
+      DrawCoordinateSystem(3.0f, WHITE);
       #endif
     EndDrawing();
   }
