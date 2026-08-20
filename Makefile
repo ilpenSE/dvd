@@ -1,2 +1,2 @@
-main: main.c Makefile
-	cc -o main main.c `pkg-config --cflags --libs raylib`
+main: main.cpp Makefile
+	c++ -o main main.cpp `pkg-config --cflags --libs raylib`
